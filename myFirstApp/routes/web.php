@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\ProductsController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,9 +16,9 @@ function allUsers()
             4 => ['name' => "David", 'roll' => 23, 'city' => "Vadodara"]
         ];
 }
-Route::get('/', function () {
-    return view('first');
-});
+// Route::get('/', function () {
+//     return view('first');
+// });
 
 Route::get('/users', function () {
     $name = "corbital";
@@ -43,3 +46,35 @@ Route::get('/profile/{id}',function($id){
 
     return view('profile',['user'=>$user]);
 })->name('profile');
+
+
+Route::get('/book',[BookController::class,'index']);
+
+
+//----------------------Query Builder-----------------------
+Route::get('/',function(){
+    $allUsers=DB::table('users')->get();
+    //$insert=DB::table('users')->insert(['name'=>'abcd','email'=>'abcd@gmail.com','password'=>'123']);
+    //dd($insert);
+
+    //$update=DB::table('users')->where('id',2)->update(['email'=>'abc@yahoo.com']);
+    //dd($update);
+
+    $delete=DB::table('users')->where('id',2)->delete();
+    //dd($delete);
+
+    dd($allUsers);
+});
+
+//----------------Working with database--------------------
+
+// Route::get('/allProducts',function(){
+//     $allItems=DB::table('products')->get();
+//     //dd($allItems);
+//     return view('products',['allProducts'=>$allItems]);
+// });
+
+Route::get('/allProducts',[ProductsController::class,'index']);
+Route::post('/form',[ProductsController::class,'insert'])->name('productAdd');
+
+Route::view('/form','form')->name('form');
