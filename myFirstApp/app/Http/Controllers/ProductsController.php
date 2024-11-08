@@ -7,15 +7,12 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $allItems=Products::all();
         //dd($allItems);
         //return view('products',['allProducts'=>$allItems]);
-
+       
         return view('products',compact('allItems'));
     }
 
@@ -23,7 +20,6 @@ class ProductsController extends Controller
         
         //dd($data);
         $insert_data=['productId'=>$data['pid'],'productName'=>$data['pname'],'customerName'=>$data['cid']];
-        //dd($data);
         $sms=$data['id'] ? 'update success!' : 'insert success';
         Products::updateorCreate(['id'=>$data['id']],$insert_data);
  
