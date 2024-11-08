@@ -74,7 +74,7 @@ Route::get('/',function(){
 //     return view('products',['allProducts'=>$allItems]);
 // });
 
-Route::get('/allProducts',[ProductsController::class,'index']);
+Route::get('/allProducts',[ProductsController::class,'index'])->name('allProducts');
 Route::post('/form',[ProductsController::class,'insert'])->name('productAdd');
-
-Route::view('/form','form')->name('form');
+Route::get('/delete/{id}',[ProductsController::class,'delete'])->name('productDelete');
+Route::get('/form/{id?}',[ProductsController::class,'displayForm'])->name('form');
