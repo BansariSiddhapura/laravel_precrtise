@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
-   
+
     <title>Form</title>
 </head>
 
@@ -16,21 +16,38 @@
         {{-- {{$data}} --}}
         <form action="{{ route('productAdd') }}" id="productForm" method="post">
             @csrf
-            <input type="hidden" name="id" value="{{$data->id ?? ''}}">
+            <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
             <div class="mb-3">
-                <input type="text" class="form-control" name="pid" placeholder="enter product id" value="{{ $data->productId ?? ''}}">
+                <input type="number" class="form-control @error('product_id') is-invalid @enderror" name="product_id"
+                    placeholder="enter product id" value="{{ $data->productId ?? '' }}">
+                <div>
+                    @error('product_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="pname" placeholder="enter product name" value="{{ $data->productName ?? '' }}">
+                <input type="text" class="form-control @error('product_name') is-invalid @enderror"
+                    name="product_name" placeholder="enter product name" value="{{ $data->productName ?? '' }}">
+                <div>
+                    @error('product_name')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="cid" placeholder="enter customer name" value="{{ $data->customerName ?? '' }}">
+                <input type="text" class="form-control @error('customer_name') is-invalid @enderror"
+                    name="customer_name" placeholder="enter customer name" value="{{ $data->customerName ?? '' }}">
+                @error('customer_name')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-success">Save</a>
             </div>
         </form>
     </div>
- 
+
 </body>
+
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -16,10 +17,17 @@ class ProductsController extends Controller
         return view('products',compact('allItems'));
     }
 
-    public function insert(Request $data){
+    public function insert(Request $data) {
         
+        $data->validate([
+            'product_id' => 'required|numeric|between:100,500',
+            'product_name' => 'required|lowercase',
+            'customer_name' => 'required|uppercase'
+        ],[
+           'product_name.lowercase' => 'please enter product name in lowecase'
+        ]);
         //dd($data);
-        $insert_data=['productId'=>$data['pid'],'productName'=>$data['pname'],'customerName'=>$data['cid']];
+        $insert_data=['productId'=>$data['product_id'],'productName'=>$data['product_name'],'customerName'=>$data['customer_name']];
         $sms=$data['id'] ? 'update success!' : 'insert success';
         Products::updateorCreate(['id'=>$data['id']],$insert_data);
  
