@@ -6,7 +6,7 @@
 
 ## how to pass variable or array from routes to view
 
-web.php :
+iweb.php :
 
 ```php
 function allUsers()
