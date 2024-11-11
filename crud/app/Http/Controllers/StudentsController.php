@@ -10,22 +10,27 @@ class StudentsController extends Controller
 {
     public function register(StudentRequest $request)
     {
-        // $request->validate([
-        //     'full_name'=>'required',
-        //     'email'=>'required|unique'
-        // ]);
-
         //dd($request);
-        $subjects=implode(',',$request['subjects']);
-        //dd($subjects);
-        $data = ['fullName' => $request['full_name'], 'email' => $request['email'], 'password' => $request['password'], 'confirm_password' => $request['confirm_password'], 'date_of_birth' => $request['date_of_birth'], 'courses' => $request['course'], 'gender' => $request['gender'], 'subjects' => $subjects];
+        $data=$request->all();
+        $data['subjects']=implode(',',$request['subjects']);
 
         //dd($data);
-        Students::updateorCreate(['id' => $request['id']],$data);
-        return to_route('home');
+        Students::updateOrCreate(['id' => $data['id']],$data);
+        return to_route('showTable');
     }
-    public function displayForm()
+    public function displayForm($id=null)
     {
-        return view('studentForm');
+        $selectOne = $id ? Students::find($id) : '';
+
+        return view('studentForm',compact('selectOne'));
+    }
+    public function showTableData(){
+        $allData=Students::all();
+       // dd($allData);
+        return view('welcome',compact('allData'));
+    }
+    public function deleteStudent($id){
+        Students::where('id',$id)->delete();
+        return to_route('showTable');
     }
 }

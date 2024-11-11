@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StudentRequest extends FormRequest
@@ -21,19 +22,27 @@ class StudentRequest extends FormRequest
      */
     public function rules(): array
     {
+        //dd($this);
+        $userId=$this->id ?? null;
         return [
-            'full_name'=>'required',
-            'email'=>'required|unique:students,email|email',
+            'fullName'=>'required',
+            'email'=> "required|unique:students,email,$userId|email",
+            'password'=> $userId ? 'nullable' : 'required',
+            'confirm_password'=>$userId ? 'nullable' : 'required|same:password',
             'gender'=>'required',
-            'date_of_birth'=>'required|date',
-            'course'=>'required',
+            'date_of_birth'=>'required|date|after:today|before:2024-12-30',
+            'courses'=>'required',
             'subjects'=>'required|size:3',
+            //'subjects'=>'required'
         ];
     }
     public function messages()
     {
         return[
-            'subjects.size'=>'select atleast 3 subjects'
+            'subjects.size'=>'select atleast 3 subjects',
+            'confirm_password.same'=>"password don't match",
+            'date_of_birth.after'=>"you only enter date after today",
+            'date_of_birth.before'=>'you only enter date before 30-12-2024'
         ];
     }
 }

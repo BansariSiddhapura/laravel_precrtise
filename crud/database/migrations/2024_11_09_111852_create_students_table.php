@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('fullName',length:255);
             $table->string('email',length:200);
             $table->string('password',length:255);
-            $table->string('confirm_password',length:255);
+        
             $table->date('date_of_birth');
             $table->string('courses',length:255);
             $table->string('gender',length:255);

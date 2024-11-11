@@ -11,7 +11,6 @@ class Students extends Model
         'fullName',
         'email',
         'password',
-        'confirm_password',
         'date_of_birth',
         'courses',
         'gender',
