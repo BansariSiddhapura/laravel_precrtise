@@ -20,6 +20,10 @@
     <div class="container w-50 my-5 border py-3 px-4 shadow-sm">
         <p class="fs-3 fw-medium">Add Student</p>
         {{-- {{$selectOne}} --}}
+      {{-- @dd($selectOne) --}}
+        {{-- @if($errors)
+            @dd($errors)
+        @endif --}}
         <form action="{{ route('studentRegister') }}" id="studentForm" method="post">
             @csrf
             <input type="hidden" name="id" value="{{ $selectOne->id ?? '' }}">
@@ -38,7 +42,7 @@
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
-            @if ($selectOne == null)
+            @if ($selectOne['id'] == null)
                 <div class="row mb-3">
                     <div class="col">
                         <input type="password" name="password"
@@ -51,7 +55,7 @@
                     <div class="col">
                         <input type="password" name="confirm_password"
                             class="form-control @error('confirm_password') is-invalid @enderror"
-                            placeholder="Enter confirm password" @if ($selectOne == !null) disabled @endif>
+                            placeholder="Enter confirm password">
                         @error('confirm_password')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -70,14 +74,14 @@
             <div class="mb-3">
                 <select name="courses" class="form-control @error('courses') is-invalid @enderror">
                     <option value="" selected>select your course</option>
-                    <option value="BCA" {{ old('courses', $selectOne->courses ?? '') == 'BCA' ? 'selected' : '' }}>
+                    <option value="BCA" @selected(old('courses', $selectOne->courses ?? '') == 'BCA')>
                         BCA
                     </option>
-                    <option value="MCA" {{ old('courses', $selectOne->courses ?? '') == 'MCA' ? 'selected' : '' }}>
+                    <option value="MCA" @selected( old('courses', $selectOne->courses ?? '') == 'MCA')>
                         MCA
                     </option>
                     <option value="Mtech"
-                        {{ old('courses', $selectOne->courses ?? '') == 'Mtech' ? 'selected' : '' }}>
+                      @selected( old('courses', $selectOne->courses ?? '') == 'Mtech' ) >
                         Mtech.</option>
                 </select>
                 @error('courses')
@@ -85,9 +89,9 @@
                 @enderror
             </div>
             <div class="mb-3 d-flex gap-3">
-                Gender : {{$gender=old('gender', $selectOne->gender ?? '')}}
+                Gender : {{ $gender = old('gender', $selectOne->gender ?? '') }}
                 <input type="radio" class="form-check-input" name="gender" value="male"
-                    {{ $gender== 'male' ? 'checked' : '' }}> Male
+                    {{ $gender == 'male' ? 'checked' : '' }}> Male
                 <input type="radio" class="form-check-input" name="gender" value="female"
                     {{ $gender == 'female' ? 'checked' : '' }}> Female
                 <input type="radio" class="form-check-input" name="gender" value="other"
@@ -99,24 +103,20 @@
             <div class="mb-3 d-flex gap-3">
                 Subjects :
                 <input type="checkbox" class="form-check-input @error('subjects') is-invalid @enderror"
-                    name="subjects[]" value="php"
-                    {{ in_array('php', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}>
+                    name="subjects[]" value="php" @checked(in_array('php', old('subjects', $selectOne->subjects ?? [])))>
+                {{-- {{ in_array('php', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}> --}}
                 PHP
                 <input type="checkbox" class="form-check-input @error('subjects') is-invalid @enderror"
-                    name="subjects[]" value="javascript"
-                    {{ in_array('javascript', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}>
+                    name="subjects[]" value="javascript" @checked(in_array('javascript', old('subjects', $selectOne->subjects ?? [])))>
                 JavaScript
                 <input type="checkbox" class="form-check-input @error('subjects') is-invalid @enderror"
-                    name="subjects[]" value="laravel"
-                    {{ in_array('laravel', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}>
+                    name="subjects[]" value="laravel" @checked(in_array('laravel', old('subjects', $selectOne->subjects ?? [])))>
                 Laravel
                 <input type="checkbox" class="form-check-input @error('subjects') is-invalid @enderror"
-                    name="subjects[]" value="jquery"
-                    {{ in_array('jquery', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}>
+                    name="subjects[]" value="jquery" @checked(in_array('jquery', old('subjects', $selectOne->subjects ?? [])))>
                 JQuery
                 <input type="checkbox" class="form-check-input @error('subjects') is-invalid @enderror"
-                    name="subjects[]" value="html"
-                    {{ in_array('html', old('subjects', explode(',', $selectOne->subjects ?? ''))) ? 'checked' : '' }}>
+                    name="subjects[]" value="html" @checked(in_array('html', old('subjects', $selectOne->subjects ?? [])))>
                 HTML
                 @error('subjects')
                     <div class="text-danger">{{ $message }}</div>
@@ -127,7 +127,7 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/all.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
 </body>
 
 </html>

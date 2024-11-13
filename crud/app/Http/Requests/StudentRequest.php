@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Hash;
 class StudentRequest extends FormRequest
 {
     /**
@@ -45,4 +45,9 @@ class StudentRequest extends FormRequest
             'date_of_birth.before'=>'you only enter date before 30-12-2024'
         ];
     }
+    // public function passedValidation(){
+    //     $this->merge([
+    //         'password'=>Hash::make($this->password)
+    //     ]);
+    // }
 }
