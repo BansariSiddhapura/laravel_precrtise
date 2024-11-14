@@ -1,66 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Notes : CURD using Authentication
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## flash message
 
-## About Laravel
+web.php :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```php
+session()->flash('message_delete', 'student deleted successfully');
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+blade.php :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```php
+   @if (session()->has('message_delete'))
+         <div class="alert alert-danger d-flex justify-content-between">
+            {{ session('message_delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+```
 
-## Learning Laravel
+## some basics validations
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**required, numeric,lowercase etc..**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**size :** size:3,size:12
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**between :** between:min,max **example:** between:100,500
 
-## Laravel Sponsors
+**after,before :** used for date validation **example:** after:date before:date
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**unique :** unique:students,email,$userId
 
-### Premium Partners
+students:tablename
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+email:column name
 
-## Contributing
+$userId:exclude the current user's email from the uniqueness check
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### old()
 
-## Code of Conduct
+**old('key','default_value') :** used for get the old input value
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Authentication
 
-## Security Vulnerabilities
+**Auth::check()** : User login then return true otherwise false
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Auth::login()** : Used to manually authenticate a user and log them in
 
-## License
+**Auth::attempt()** : Used to authenticate a user based on user input
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Auth::user()** : return currently authenticated user , null if no user logged in
+
+**Auth::id()**: return ID of the currently logged/authenticated user
+
+**Auth::guest()**: when user are not login then redirect another page.
+
+### encypt password
+
+Models->Students.php :
+
+```php
+    protected function casts() : array
+    {
+        return [
+            'password' => 'hashed'
+        ];
+    }
+```
+
+**casts() :** way of converting attribute to common data types.
+
+**supported cast types :**
+
+- array
+- double
+- boolean
+- date
+- datetime
+- hased
+- integer
+- float
+- real
+- string
+- timestamp
+- collections
+- encrypted ect....
+
+## How to make custom component
+
+### 1. create component using command
+
+```sql
+php artisan make:component Alert
+```
+
+it makes two file: **1.** app->view->components->Alert.php **2.** resources->views->components->alert.blade.php
+
+### 2. Register Component
+
+app->provider :-
+
+```php
+public function boot(): void
+    {
+        Blade::component('package-alert', Alert::class);
+    }
+}
+```
+
+### 3. Ready the component in alert.blade.php
+
+```php
+<div>
+    <div class="alert alert-{{ $type }} d-flex justify-content-between">
+        {{ $message }}
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+</div>
+```
+
+### 4. pass the component's data attributes in class(app->view->components->Alert.php) constructor
+
+```php
+public function __construct(public string $type,public string $message)
+{
+        
+}
+```
+
+### 5. use it into any blade.php file
+
+```php
+@if (session()->has('login'))
+    <x-package-alert type="danger" message="{{session('login')}}"/>
+@endif
+
+@if (session()->has('message'))
+    <x-package-alert type="success" message="{{session('message')}}"/>
+@endif
+
+@if (session()->has('message_delete'))
+    <x-package-alert type="danger" message="{{session('message_delete')}}"/>
+@endif
+
+```

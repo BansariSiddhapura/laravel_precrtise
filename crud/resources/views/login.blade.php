@@ -21,11 +21,11 @@
     <div class="container w-25 my-5 border py-4 px-4 shadow-sm" x-data>
         <p x-text="hello"></p>
         @if (session()->has('login'))
-            <div class="alert alert-danger d-flex justify-content-between">
+            {{-- <div class="alert alert-danger d-flex justify-content-between">
                 {{ session('login') }}
                 <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="close"></button>
-            </div>
-            {{-- <x-package-alert /> --}}
+            </div> --}}
+            <x-package-alert type="danger" message="{{session('login')}}"/>
         @endif
         <p class="fs-3 fw-medium text-center">Student Login</p>
         <form action="{{ route('login') }}" id="studentForm" method="post">

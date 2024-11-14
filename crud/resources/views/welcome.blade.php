@@ -20,16 +20,18 @@
     <div class="container-fluid w-75 my-3">
         <div>
             @if (session()->has('message'))
-                <div class="alert alert-success d-flex justify-content-between" x-transition:enter.duration.500ms>
+                {{-- <div class="alert alert-success d-flex justify-content-between" x-transition:enter.duration.500ms>
                     {{ session('message') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                </div> --}}
+                <x-package-alert type="success" message="{{session('message')}}"/>
             @endif
             @if (session()->has('message_delete'))
-                <div class="alert alert-danger d-flex justify-content-between">
+                {{-- <div class="alert alert-danger d-flex justify-content-between">
                     {{ session('message_delete') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                </div> --}}
+                <x-package-alert type="danger" message="{{session('message_delete')}}"/>
             @endif
         </div>
         <a href="{{ route('studentForm') }}" class="btn btn-primary">Add student</a>

@@ -20,7 +20,12 @@ class StudentsController extends Controller
         //dd($data);
         Students::updateOrCreate(['id' => $data['id']], $data);
         session()->flash('message', $message);
-        return to_route('login');
+        if(Auth::check()){
+            return to_route('showTable');
+        }else{
+            return to_route('login');
+        }
+        
     }
     public function displayForm($id = null)
     {
