@@ -18,14 +18,16 @@
         </div>
     </nav>
     <div class="container w-25 my-5 border py-4 px-4 shadow-sm">
-        @if(session()->has('login'))
+        @if (session()->has('login'))
             <div class="alert alert-danger d-flex justify-content-between">
-                {{session('login')}}
+                {{ session('login') }}
                 <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="close"></button>
             </div>
+            {{-- <x-package-alert /> --}}
+           
         @endif
         <p class="fs-3 fw-medium text-center">Student Login</p>
-        <form action="" id="studentForm" method="post">
+        <form action="{{ route('login') }}" id="studentForm" method="post">
             @csrf
 
             <div class="mb-3">
@@ -36,17 +38,16 @@
                 @enderror
             </div>
 
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="password" name="password"
-                            class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Enter your password">
-                        @error('password')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Enter your password">
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
-      
+            </div>
+
             <div class=" mb-3">
                 <button type="submit" class="btn btn-success">Save</a>
             </div>

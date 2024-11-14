@@ -14,7 +14,7 @@
     <nav class="navbar bg-dark text-light">
         <div class="container-fluid">
             <span class="fs-3">Welcome</span>
-            <a href="{{ route('showTable') }}" class="text-decoration-none text-white">Show all students</a>
+            <a href="{{ route('login') }}" class="text-decoration-none text-white">Login</a>
         </div>
     </nav>
     <div class="container w-50 my-5 border py-3 px-4 shadow-sm">
@@ -53,10 +53,10 @@
                         @enderror
                     </div>
                     <div class="col">
-                        <input type="password" name="confirm_password"
-                            class="form-control @error('confirm_password') is-invalid @enderror"
+                        <input type="password" name="password_confirmation"
+                            class="form-control @error('password_confirmation') is-invalid @enderror"
                             placeholder="Enter confirm password">
-                        @error('confirm_password')
+                        @error('password_confirmation')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

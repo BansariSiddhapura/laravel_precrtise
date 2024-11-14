@@ -14,3 +14,5 @@ Route::get('/deleteStudent/{id?}',[StudentsController::class,'deleteStudent'])->
 
 // Route::post('/loginSuccess',[StudentsController::class,'login'])->name('login');
 Route::match(['get', 'post'], '/',[StudentsController::class,'login'])->name('login');
+
+Route::get('/logout',[StudentsController::class,'logout'])->name('logout');

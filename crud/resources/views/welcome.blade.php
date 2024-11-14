@@ -12,9 +12,9 @@
 <body>
     <nav class="navbar bg-dark text-light">
         <div class="container-fluid">
-            <span class="fs-3">Welcome {{Auth::user()->fullName}}</span>
-            <a href="" class="text-decoration-none text-white">Logout</a>
-          
+            <span class="fs-3">Welcome {{ Auth::user()->fullName }}</span>
+            <a href="{{ route('logout') }}" class="text-decoration-none text-white">Logout</a>
+
         </div>
     </nav>
     <div class="container-fluid w-75 my-3">
@@ -33,7 +33,7 @@
             @endif
         </div>
         <a href="{{ route('studentForm') }}" class="btn btn-primary">Add student</a>
-       
+
         <table class="table table-bordered table-striped my-3">
             <thead>
                 <th>ID</th>
@@ -48,21 +48,23 @@
             <tbody>
                 {{-- {{$allData}} --}}
                 @foreach ($allData as $row)
-                    <tr>
-                        <td>{{ $row->id }}</td>
-                        <td>{{ $row->fullName }}</td>
-                        <td>{{ $row->email }}</td>
-                        <td>{{ $row->date_of_birth }}</td>
-                        <td>{{ $row->courses }}</td>
-                        <td>{{ $row->gender }}</td>
-                        <td>{{ $row->subjects }}</td>
-                        <td>
-                            <a href="{{ route('studentForm', ['id' => $row->id]) }}"
-                                class="btn btn-outline-warning">Edit</a>
-                            <a href="{{ route('delete', ['id' => $row->id]) }}"
-                                class="btn btn-outline-danger">Delete</a>
-                        </td>
-                    </tr>
+                    @if ($row['fullName'] != Auth::user()->fullName)
+                        <tr>
+                            <td>{{ $row->id }}</td>
+                            <td>{{ $row->fullName }}</td>
+                            <td>{{ $row->email }}</td>
+                            <td>{{ $row->date_of_birth }}</td>
+                            <td>{{ $row->courses }}</td>
+                            <td>{{ $row->gender }}</td>
+                            <td>{{ $row->subjects }}</td>
+                            <td>
+                                <a href="{{ route('studentForm', ['id' => $row->id]) }}"
+                                    class="btn btn-outline-warning">Edit</a>
+                                <a href="{{ route('delete', ['id' => $row->id]) }}"
+                                    class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

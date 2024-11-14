@@ -7,6 +7,7 @@ use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 class StudentsController extends Controller
 {
     public function register(StudentRequest $request)
@@ -15,11 +16,11 @@ class StudentsController extends Controller
         $data = $request->all();
         $data['subjects'] = implode(',', $request['subjects']);
         $message = $data['id'] ?  'student updated successfully' : 'student added successfully';
-        
+
         //dd($data);
         Students::updateOrCreate(['id' => $data['id']], $data);
         session()->flash('message', $message);
-        return to_route('showTable');
+        return to_route('login');
     }
     public function displayForm($id = null)
     {
@@ -34,9 +35,14 @@ class StudentsController extends Controller
     }
     public function showTableData()
     {
-        $allData = Students::all();
-        // dd($allData);
-        return view('welcome', compact('allData'));
+        if(Auth::check()){
+            $allData = Students::all();
+            // dd($allData);
+            return view('welcome', compact('allData'));
+        }else{
+            return redirect()->route('login');
+        }
+       
     }
     public function deleteStudent($id)
     {
@@ -52,17 +58,22 @@ class StudentsController extends Controller
             return view('login');
         } else {
             //dd($request);
-            $rules =$request->validate([
+            $rules = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
             //dd($rules);
-            if(Auth::attempt($rules)){
+            if (Auth::attempt($rules)) {
                 return to_route('showTable');
-            }else{
-                session()->flash('login','login failed!!');
+            } else {
+                session()->flash('login', 'login failed!!');
                 return view('login');
             }
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return to_route('login');
     }
 }

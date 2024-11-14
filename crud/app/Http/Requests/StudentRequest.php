@@ -27,8 +27,8 @@ class StudentRequest extends FormRequest
         return [
             'fullName'=>'required',
             'email'=> "required|unique:students,email,$userId|email",
-            'password'=> $userId ? 'nullable' : 'required',
-            'confirm_password'=>$userId ? 'nullable' : 'required|same:password',
+            'password'=> $userId ? 'nullable' : 'required|confirmed',
+            // 'confirm_password'=>$userId ? 'nullable' : 'required|same:password',
             'gender'=>'required',
             'date_of_birth'=>'required|date|after:today|before:2024-12-30',
             'courses'=>'required',
