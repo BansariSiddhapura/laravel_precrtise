@@ -20,7 +20,7 @@
     <div class="container-fluid w-75 my-3">
         <div>
             @if (session()->has('message'))
-                <div class="alert alert-success d-flex justify-content-between">
+                <div class="alert alert-success d-flex justify-content-between" x-transition:enter.duration.500ms>
                     {{ session('message') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

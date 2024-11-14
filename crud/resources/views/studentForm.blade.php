@@ -19,11 +19,7 @@
     </nav>
     <div class="container w-50 my-5 border py-3 px-4 shadow-sm">
         <p class="fs-3 fw-medium">Add Student</p>
-        {{-- {{$selectOne}} --}}
-      {{-- @dd($selectOne) --}}
-        {{-- @if($errors)
-            @dd($errors)
-        @endif --}}
+  
         <form action="{{ route('studentRegister') }}" id="studentForm" method="post">
             @csrf
             <input type="hidden" name="id" value="{{ $selectOne->id ?? '' }}">
