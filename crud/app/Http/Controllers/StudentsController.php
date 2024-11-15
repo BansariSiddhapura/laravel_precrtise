@@ -53,13 +53,8 @@ class StudentsController extends Controller
     }
     public function showTableData()
     {
-        if (Auth::check()) {
-            $allData = Students::all();
-            // dd($allData);
-            return view('welcome', compact('allData'));
-        } else {
-            return redirect()->route('login');
-        }
+        $allData = Students::all();
+        return view('welcome', compact('allData'));    
     }
     public function deleteStudent($id)
     {
