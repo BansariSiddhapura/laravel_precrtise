@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('courses',length:255);
             $table->string('gender',length:255);
             $table->string('subjects',length:255);
+            $table->string('profile');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@
     <div class="container w-50 my-5 border py-3 px-4 shadow-sm">
         <p class="fs-3 fw-medium">Add Student</p>
   
-        <form action="{{ route('studentRegister') }}" id="studentForm" method="post">
+        <form action="{{ route('studentRegister') }}" id="studentForm" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id" value="{{ $selectOne->id ?? '' }}">
             <div class="mb-3">
@@ -117,6 +117,12 @@
                 @error('subjects')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
+            </div>
+            <div class="mb-3">
+                <input type="file" class="form-control my-2" name="profile">
+                @if(!empty($selectOne->profile)) 
+                    <img src="{{asset('storage/'.$selectOne->profile)}}" alt="" class="img-fluid" height="200" width="200">
+                @endif
             </div>
             <div class=" mb-3">
                 <button type="submit" class="btn btn-success">Save</a>

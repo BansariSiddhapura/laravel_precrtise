@@ -33,6 +33,7 @@ class StudentRequest extends FormRequest
             'date_of_birth'=>'required|date|after:today|before:2024-12-30',
             'courses'=>'required',
             'subjects'=>'required|size:3',
+            'profile'=>$userId ? 'nullable' : 'required'
             //'subjects'=>'required'
         ];
     }

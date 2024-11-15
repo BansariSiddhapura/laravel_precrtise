@@ -14,7 +14,8 @@ class Students extends Authenticatable
         'date_of_birth',
         'courses',
         'gender',
-        'subjects'
+        'subjects',
+        'profile'
     ];
     protected function casts() : array
     {

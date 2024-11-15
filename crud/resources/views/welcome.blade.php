@@ -20,18 +20,10 @@
     <div class="container-fluid w-75 my-3">
         <div>
             @if (session()->has('message'))
-                {{-- <div class="alert alert-success d-flex justify-content-between" x-transition:enter.duration.500ms>
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div> --}}
-                <x-package-alert type="success" message="{{session('message')}}"/>
+                <x-package-alert type="success" message="{{ session('message') }}" />
             @endif
             @if (session()->has('message_delete'))
-                {{-- <div class="alert alert-danger d-flex justify-content-between">
-                    {{ session('message_delete') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div> --}}
-                <x-package-alert type="danger" message="{{session('message_delete')}}"/>
+                <x-package-alert type="danger" message="{{ session('message_delete') }}" />
             @endif
         </div>
         <a href="{{ route('studentForm') }}" class="btn btn-primary">Add student</a>
@@ -45,13 +37,15 @@
                 <th>Course</th>
                 <th>Gender</th>
                 <th>Subjects</th>
+                <th>Profile</th>
                 <th>Actions</th>
             </thead>
             <tbody>
-                {{-- {{$allData}} --}}
+
                 @foreach ($allData as $row)
-                    @if ($row['fullName'] != Auth::user()->fullName)
+                    {{-- @if ($row['fullName'] != Auth::user()->fullName) --}}
                         <tr>
+                            {{-- @dd($row->profile) --}}
                             <td>{{ $row->id }}</td>
                             <td>{{ $row->fullName }}</td>
                             <td>{{ $row->email }}</td>
@@ -59,6 +53,8 @@
                             <td>{{ $row->courses }}</td>
                             <td>{{ $row->gender }}</td>
                             <td>{{ $row->subjects }}</td>
+                            <td><img src="{{ asset('storage/' . $row->profile) }}" class="img-thumbnail rounded-5"
+                                    height="60" width="60"></td>
                             <td>
                                 <a href="{{ route('studentForm', ['id' => $row->id]) }}"
                                     class="btn btn-outline-warning">Edit</a>
@@ -66,7 +62,7 @@
                                     class="btn btn-outline-danger">Delete</a>
                             </td>
                         </tr>
-                    @endif
+                    {{-- @endif --}}
                 @endforeach
             </tbody>
         </table>
