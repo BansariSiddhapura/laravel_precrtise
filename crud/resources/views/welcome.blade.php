@@ -43,6 +43,7 @@
             <tbody>
 
                 @foreach ($allData as $row)
+                    
                     {{-- @if ($row['fullName'] != Auth::user()->fullName) --}}
                         <tr>
                             {{-- @dd($row->profile) --}}
@@ -57,7 +58,7 @@
                                     height="60" width="60"></td>
                             <td>
                                 <a href="{{ route('studentForm', ['id' => $row->id]) }}"
-                                    class="btn btn-outline-warning">Edit</a>
+                                    class="btn btn-outline-warning" >Edit</a>
                                 <a href="{{ route('delete', ['id' => $row->id]) }}"
                                     class="btn btn-outline-danger">Delete</a>
                             </td>
