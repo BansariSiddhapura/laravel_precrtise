@@ -14,18 +14,31 @@ class StudentsController extends Controller
     {
         //dd($request);
         $data = $request->all();
+        //dd($data);
         $data['subjects'] = implode(',', $request['subjects']);
+        
+        //dd($data['profile']);
+        if($request->hasFile('profile')){
+                //dd($request->hasFile('profile'));
+                if($data['id']!=null){
+                    $selectUser=Students::find($data['id']);
+                    //dd($selectUser['profile']);
+                    $path = "../public/storage/" . $selectUser['profile'];
+                    unlink($path);
+                }
+                $data['profile'] = $request->file('profile')->store('images_uploaded', 'public');
+        }
+
         $message = $data['id'] ?  'student updated successfully' : 'student added successfully';
 
         //dd($data);
         Students::updateOrCreate(['id' => $data['id']], $data);
         session()->flash('message', $message);
-        if(Auth::check()){
+        if (Auth::check()) {
             return to_route('showTable');
-        }else{
+        } else {
             return to_route('login');
         }
-        
     }
     public function displayForm($id = null)
     {
@@ -34,24 +47,29 @@ class StudentsController extends Controller
         $selectOne['subjects'] = explode(',', $selectOne['subjects'] ?? '');
         $selectOne['id'] = $id;
 
-        //dd($selectOne);
-        //    dd($selectOne->subjects);
+        //dd($selectOne['profile']);
+        //dd($selectOne->subjects);
         return view('studentForm', compact('selectOne'));
     }
     public function showTableData()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $allData = Students::all();
             // dd($allData);
             return view('welcome', compact('allData'));
-        }else{
+        } else {
             return redirect()->route('login');
         }
-       
     }
     public function deleteStudent($id)
     {
-        Students::where('id', $id)->delete();
+        $qry = Students::find($id);
+
+        $path = "../public/storage/{$qry->profile}";
+        if (Students::exists($path)) {
+            unlink($path);
+        }
+        $qry->delete();
         session()->flash('message_delete', 'student deleted successfully');
         return to_route('showTable');
     }
@@ -77,7 +95,8 @@ class StudentsController extends Controller
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return to_route('login');
     }
