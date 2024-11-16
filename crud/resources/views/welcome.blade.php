@@ -13,7 +13,17 @@
     <nav class="navbar bg-dark text-light">
         <div class="container-fluid">
             <span class="fs-3">Welcome {{ Auth::user()->fullName }}</span>
-            <a href="{{ route('logout') }}" class="text-decoration-none text-white">Logout</a>
+            <div class="dropdown dropstart">
+                <img src="https://cdn-icons-png.flaticon.com/512/8847/8847419.png" height="40px" width="40px"
+                    class="img-fluid" data-bs-toggle="dropdown" aria-expanded="false">
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+
+
+
 
         </div>
     </nav>
@@ -38,37 +48,37 @@
                 <th>Gender</th>
                 <th>Subjects</th>
                 <th>Profile</th>
-                <th>Actions</th>
+                {{-- <th>Actions</th> --}}
             </thead>
             <tbody>
 
                 @foreach ($allData as $row)
-                    
                     {{-- @if ($row['fullName'] != Auth::user()->fullName) --}}
-                        <tr>
-                            {{-- @dd($row->profile) --}}
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->fullName }}</td>
-                            <td>{{ $row->email }}</td>
-                            <td>{{ $row->date_of_birth }}</td>
-                            <td>{{ $row->courses }}</td>
-                            <td>{{ $row->gender }}</td>
-                            <td>{{ $row->subjects }}</td>
-                            <td><img src="{{ asset('storage/' . $row->profile) }}" class="img-thumbnail rounded-5"
-                                    height="60" width="60"></td>
-                            <td>
+                    <tr>
+                        {{-- @dd($row->profile) --}}
+                        <td>{{ $row->id }}</td>
+                        <td>{{ $row->fullName }}</td>
+                        <td>{{ $row->email }}</td>
+                        <td>{{ $row->date_of_birth }}</td>
+                        <td>{{ $row->courses }}</td>
+                        <td>{{ $row->gender }}</td>
+                        <td>{{ $row->subjects }}</td>
+                        <td><img src="{{ asset('storage/' . $row->profile) }}" class="rounded-5" height="60"
+                                width="60"></td>
+                        {{-- <td>
                                 <a href="{{ route('studentForm', ['id' => $row->id]) }}"
-                                    class="btn btn-outline-warning" >Edit</a>
+                                    class="btn btn-warning" >Edit</a>
                                 <a href="{{ route('delete', ['id' => $row->id]) }}"
-                                    class="btn btn-outline-danger">Delete</a>
-                            </td>
-                        </tr>
+                                    class="btn btn-danger">Delete</a>
+                            </td> --}}
+                    </tr>
                     {{-- @endif --}}
                 @endforeach
             </tbody>
         </table>
     </div>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    {{-- <script src="{{ asset('js/bootstrap.js') }}"></script> --}}
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>

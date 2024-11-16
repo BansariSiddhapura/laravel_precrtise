@@ -16,20 +16,18 @@ class StudentsController extends Controller
         $data = $request->all();
         //dd($data);
         $data['subjects'] = implode(',', $request['subjects']);
-        
+
         //dd($data['profile']);
-        if($request->hasFile('profile')){
-                //dd($request->hasFile('profile'));
-                if($data['id']!=null){
-                    $selectUser=Students::find($data['id']);
-                    //dd($selectUser['profile']);
-                    $path = "../public/storage/" . $selectUser['profile'];
-                    unlink($path);
-                }
-                $data['profile'] = $request->file('profile')->store('images_uploaded', 'public');
+        if ($request->hasFile('profile')) {
+            if ($data['id'] != null) {
+                $selectUser = Students::find($data['id']);
+                $path = "../public/storage/" . $selectUser['profile'];
+                unlink($path);
+            }
+            $data['profile'] = $request->file('profile')->store('images_uploaded', 'public');
         }
 
-        $message = $data['id'] ?  'student updated successfully' : 'student added successfully';
+        $message = $data['id'] ?  'Your profile updated successfully' : 'student added successfully';
 
         //dd($data);
         Students::updateOrCreate(['id' => $data['id']], $data);
@@ -46,15 +44,12 @@ class StudentsController extends Controller
 
         $selectOne['subjects'] = explode(',', $selectOne['subjects'] ?? '');
         $selectOne['id'] = $id;
-
-        //dd($selectOne['profile']);
-        //dd($selectOne->subjects);
         return view('studentForm', compact('selectOne'));
     }
     public function showTableData()
     {
         $allData = Students::all();
-        return view('welcome', compact('allData'));    
+        return view('welcome', compact('allData'));
     }
     public function deleteStudent($id)
     {
@@ -94,5 +89,9 @@ class StudentsController extends Controller
     {
         Auth::logout();
         return to_route('login');
+    }
+
+    public function profile(){
+        return view('profile');
     }
 }
