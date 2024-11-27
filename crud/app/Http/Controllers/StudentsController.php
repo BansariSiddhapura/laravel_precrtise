@@ -91,7 +91,8 @@ class StudentsController extends Controller
         return to_route('login');
     }
 
-    public function profile(){
+    public function profile()
+    {
         return view('profile');
     }
 }

@@ -19,7 +19,7 @@
     </nav>
     <div class="container w-50 my-5 border py-3 px-4 shadow-sm">
         <p class="fs-3 fw-medium">Add Student</p>
-  
+
         <form action="{{ route('studentRegister') }}" id="studentForm" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id" value="{{ $selectOne->id ?? '' }}">
@@ -73,11 +73,10 @@
                     <option value="BCA" @selected(old('courses', $selectOne->courses ?? '') == 'BCA')>
                         BCA
                     </option>
-                    <option value="MCA" @selected( old('courses', $selectOne->courses ?? '') == 'MCA')>
+                    <option value="MCA" @selected(old('courses', $selectOne->courses ?? '') == 'MCA')>
                         MCA
                     </option>
-                    <option value="Mtech"
-                      @selected( old('courses', $selectOne->courses ?? '') == 'Mtech' ) >
+                    <option value="Mtech" @selected(old('courses', $selectOne->courses ?? '') == 'Mtech')>
                         Mtech.</option>
                 </select>
                 @error('courses')
@@ -120,8 +119,9 @@
             </div>
             <div class="mb-3">
                 <input type="file" class="form-control my-2" name="profile">
-                @if(!empty($selectOne->profile)) 
-                    <img src="{{asset('storage/'.$selectOne->profile)}}" alt="" class="img-fluid" height="200" width="200">
+                @if (!empty($selectOne->profile))
+                    <img src="{{ asset('storage/' . $selectOne->profile) }}" alt="" class="img-fluid"
+                        height="200" width="200">
                 @endif
             </div>
             <div class=" mb-3">
