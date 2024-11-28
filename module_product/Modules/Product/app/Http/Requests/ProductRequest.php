@@ -14,7 +14,7 @@ class ProductRequest extends FormRequest
         //dd($this);
         return [
             'productName' => 'required|string|max:255',
-            'productCode' => 'required|string|max:100',
+            'productCode' => 'required|string|max:100|unique:products,productCode',
             'productCategory' => 'required',
             'productStatus' => 'required',
         ];
