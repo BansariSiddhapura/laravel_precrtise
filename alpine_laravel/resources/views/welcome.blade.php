@@ -55,61 +55,39 @@
           <!-- Name Field -->
           <div>
             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              x-model="Name"
-              id="Name"
+            <input type="text" x-model="Name" id="Name"
               class="mt-1 p-2.5 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800"
-              placeholder="Enter your name"
-              required
-            >
+              placeholder="Enter your name" required >
           </div>
 
           <!-- Email Field -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              x-model="Email"
-              id="Email"
+            <input type="email" x-model="Email" id="Email"
               class="mt-1 p-2.5 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800"
-              placeholder="Enter your email"
-              required
-            >
+              placeholder="Enter your email" required>
           </div>
 
           <!-- Mobile Number Field -->
           <div>
             <label for="mobile" class="block text-sm font-medium text-gray-700">Mobile Number</label>
-            <input
-              type="number"
-              x-model="Mobile"
-              id="Mno"
+            <input type="number" x-model="Mobile" id="Mno"
               class="mt-1 p-2.5 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800"
-              placeholder="Enter your mobile number"
-              required
-            >
+              placeholder="Enter your mobile number" required>
           </div>
 
           <!-- City Field -->
           <div>
             <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-            <input
-              type="text"
-              x-model="City"
-              id="City"
+            <input type="text" x-model="City" id="City"
               class="mt-1 p-2.5 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-800"
-              placeholder="Enter your city"
-              required
-            >
+              placeholder="Enter your city"  required >
           </div>
 
           <!-- Submit Button -->
           <div>
-            <button
-              type="submit"
-              class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
-            >
+            <button type="submit"
+              class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300" >
               Submit
             </button>
           </div>
@@ -143,8 +121,6 @@
           .finally(function() {
               location.reload();
             })
-          
-
         },
 
         //edit client
@@ -157,10 +133,8 @@
                     this.Name=editData.Name;
                     this.Email=editData.Email;
                     this.Mobile=editData.Mno;
-                    this.City=editData.City;
-                    
+                    this.City=editData.City;            
                 })
-
         },
 
         //delete client
